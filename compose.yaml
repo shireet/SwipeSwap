@@ -1,0 +1,7 @@
+﻿services:
+  swipeswap:
+    image: swipeswap
+    build:
+      context: .
+      dockerfile: SwipeSwap/Dockerfile
+

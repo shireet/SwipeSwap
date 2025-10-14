@@ -18,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwipeSwap.Application", "sr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwipeSwap.EntryPoint", "src\SwipeSwap.EntryPoint\SwipeSwap.EntryPoint.csproj", "{9168FCC2-21C9-4401-9B01-7829AFF53418}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionFolder1", "SolutionFolder1", "{FA4D6055-9F95-498E-99E6-8208E0CC0F6F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

@@ -6,4 +6,15 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" />
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL"  />
+        <PackageReference Include="StackExchange.Redis" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\SwipeSwap.Domain\SwipeSwap.Domain.csproj" />
+    </ItemGroup>
+
 </Project>

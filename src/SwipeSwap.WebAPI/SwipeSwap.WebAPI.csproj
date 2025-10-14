@@ -21,9 +21,19 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="..\.dockerignore">
-        <Link>.dockerignore</Link>
-      </Content>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL"/>
+        <PackageReference Include="StackExchange.Redis"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools"/>
+    </ItemGroup>
+    
+    <ItemGroup>
+    <ProjectReference Include="..\SwipeSwap.Infrastructure\SwipeSwap.Infrastructure.csproj" />
+    <ProjectReference Include="..\SwipeSwap.EntryPoint\SwipeSwap.EntryPoint.csproj" />
+    <ProjectReference Include="..\SwipeSwap.Application\SwipeSwap.Application.csproj" />
     </ItemGroup>
 
 </Project>

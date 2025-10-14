@@ -10,7 +10,6 @@
         <PackageVersion Include="FluentValidation.DependencyInjectionExtensions" Version="12.0.0" />
         <PackageVersion Include="MediatR" Version="13.0.0" />
         <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="9.0.1"/>
-        <PackageVersion Include="StackExchange.Redis" Version="2.9.11" />
         <PackageVersion Include="Swashbuckle.AspNetCore.SwaggerGen" Version="9.0.4" />
         <PackageVersion Include="Swashbuckle.AspNetCore.SwaggerUI" Version="9.0.4" />
         <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.0-preview.7.25380.108" />
@@ -33,4 +32,15 @@
         <PackageVersion Include="System.CommandLine" Version="2.0.0-beta7.25380.108" />
         <PackageVersion Include="System.CommandLine.NamingConventionBinder" Version="2.0.0-beta5.25306.1" />
     </ItemGroup>
+
+    <ItemGroup>
+        <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageVersion>
+        <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.0" />
+        <PackageVersion Include="StackExchange.Redis" Version="2.7.33" />
+        <PackageVersion Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.0" />
+    </ItemGroup>
+    
 </Project>

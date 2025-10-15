@@ -6,10 +6,10 @@ using SwipeSwap.Domain.Exceptions;
 namespace EntryPoint.Controllers.v1;
 
 [ApiController]
-[Route("api/v1/[controller]/[action]")]
-public class AuthController(IMediator mediator) : ControllerBase
+[Route("api/v1/[controller]")] 
+public class UserController(IMediator mediator) : ControllerBase
 {
-    [HttpPost]
+    [HttpPost("register")]
     public async Task<IActionResult> Register(RegisterRequest request, CancellationToken cancellationToken)
     {
         var registerRequest = new SwipeSwap.Application.Auth.RegisterUserRequest(request.Email, request.Password, request.DisplayName);

@@ -11,10 +11,15 @@
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL"  />
         <PackageReference Include="StackExchange.Redis" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer"/>
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\SwipeSwap.Domain\SwipeSwap.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Dtos\" />
     </ItemGroup>
 
 </Project>

@@ -14,6 +14,11 @@ public class UserRepository(AppDbContext dbContext) : IUserRepository
         return user;
     }
 
+    public async Task<User?> GetByEmailAsync(string email)
+    {
+        return await dbContext.Users.FirstOrDefaultAsync(u => u.Email == email);
+    }
+
     public async Task UpsertAsync(User user)
     {
         var existingUser = await dbContext.Users.FindAsync(user.Id);

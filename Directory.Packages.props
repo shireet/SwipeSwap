@@ -42,5 +42,10 @@
         <PackageVersion Include="StackExchange.Redis" Version="2.7.33" />
         <PackageVersion Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.0" />
     </ItemGroup>
+
+    <ItemGroup>
+        <PackageVersion Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.10" />
+        <PackageVersion Include="BCrypt.Net-Next" Version="4.0.3" />
+    </ItemGroup>     
     
 </Project>

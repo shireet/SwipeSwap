@@ -1,7 +1,8 @@
-using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
+using SwipeSwap.Application;
 using SwipeSwap.Infrastructure;
 using SwipeSwap.Infrastructure.Context;
+using SwipeSwap.WebApi.Middleware;
 
 namespace SwipeSwap.WebApi;
 
@@ -15,27 +16,22 @@ public class Startup(IConfiguration configuration)
         var currentAssembly = typeof(Startup).Assembly;
         services
             .AddMediatR(c => c.RegisterServicesFromAssembly(currentAssembly));
-        services.AddControllers()
-            .AddFluentValidation(fv => 
-            {
-                fv.AutomaticValidationEnabled = true;
-            });
+        services.AddControllers();
         services.AddSwaggerGen();
-        
-        
-        services.AddMvc(
-            x =>
-            {
-                //x.Filters.Add(typeof(BusinessExceptionFilter));
-            });
-
         services.AddSwaggerGen();
         services.AddInfrastructure(_configuration);
+
+        services.ConfigJwt(_configuration);
+        services.AddAuthorization();
+        services.AddApplication();
     }
 
     public void Configure(IApplicationBuilder app)
     {
         app.UseRouting();
+        app.UseAuthentication();
+        app.UseAuthorization();
+        app.UseMiddleware<LoggingMiddleware>();
         app.UseSwagger();
         app.UseSwaggerUI();
         app.UseEndpoints(
@@ -43,6 +39,7 @@ public class Startup(IConfiguration configuration)
             {
                 endpoints.MapControllers();
             });
+        
         using (var scope = app.ApplicationServices.CreateScope())
         {
             var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();

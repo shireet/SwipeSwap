@@ -12,14 +12,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{AD354D99-2B7
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwipeSwap.Domain", "src\SwipeSwap.Domain\SwipeSwap.Domain.csproj", "{ED5B8840-E0E1-46F7-9D87-5F0A63F02415}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwipeSwap.Infrastructure", "src\SwipeSwap.Infrastructure\SwipeSwap.Infrastructure.csproj", "{0BCC8DC8-22A6-4480-8A35-791CF4D9DB54}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwipeSwap.Infrastructure.Postgres", "src\SwipeSwap.Infrastructure.Postgres\SwipeSwap.Infrastructure.Postgres.csproj", "{0BCC8DC8-22A6-4480-8A35-791CF4D9DB54}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwipeSwap.Application", "src\SwipeSwap.Application\SwipeSwap.Application.csproj", "{E030E36C-2E00-4BCF-95AF-651A252C0D60}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwipeSwap.EntryPoint", "src\SwipeSwap.EntryPoint\SwipeSwap.EntryPoint.csproj", "{9168FCC2-21C9-4401-9B01-7829AFF53418}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionFolder1", "SolutionFolder1", "{FA4D6055-9F95-498E-99E6-8208E0CC0F6F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwipeSwap.Infrastructure.Redis", "src\SwipeSwap.Infrastructure.Redis\SwipeSwap.Infrastructure.Redis.csproj", "{317BCF3B-34CB-4026-B29E-E9CAED56FABC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwipeSwap.Infrastructure.Jwt", "src\SwipeSwap.Infrastructure.Jwt\SwipeSwap.Infrastructure.Jwt.csproj", "{24293757-BA61-434B-82C6-6F6FC3CCAF40}"
+EndProject
+
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,6 +49,14 @@ Global
 		{9168FCC2-21C9-4401-9B01-7829AFF53418}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9168FCC2-21C9-4401-9B01-7829AFF53418}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9168FCC2-21C9-4401-9B01-7829AFF53418}.Release|Any CPU.Build.0 = Release|Any CPU
+		{317BCF3B-34CB-4026-B29E-E9CAED56FABC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{317BCF3B-34CB-4026-B29E-E9CAED56FABC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{317BCF3B-34CB-4026-B29E-E9CAED56FABC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{317BCF3B-34CB-4026-B29E-E9CAED56FABC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24293757-BA61-434B-82C6-6F6FC3CCAF40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24293757-BA61-434B-82C6-6F6FC3CCAF40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24293757-BA61-434B-82C6-6F6FC3CCAF40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24293757-BA61-434B-82C6-6F6FC3CCAF40}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{0A689F24-5D49-4245-A53E-2E6F00A734FB} = {AD354D99-2B7E-421D-8167-2CAAF464962C}

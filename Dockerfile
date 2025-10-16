@@ -8,10 +8,13 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
 COPY ["src/SwipeSwap.WebApi/SwipeSwap.WebApi.csproj", "SwipeSwap.WebApi/"]
-COPY ["src/SwipeSwap.Infrastructure/SwipeSwap.Infrastructure.csproj", "SwipeSwap.Infrastructure/"]
+COPY ["src/SwipeSwap.Infrastructure.Jwt/SwipeSwap.Infrastructure.Jwt.csproj", "SwipeSwap.Infrastructure.Jwt/"]
+COPY ["src/SwipeSwap.Infrastructure.Postgres/SwipeSwap.Infrastructure.Postgres.csproj", "SwipeSwap.Infrastructure.Postgres/"]
+COPY ["src/SwipeSwap.Infrastructure.Redis/SwipeSwap.Infrastructure.Redis.csproj", "SwipeSwap.Infrastructure.Redis/"]
 COPY ["src/SwipeSwap.Domain/SwipeSwap.Domain.csproj", "SwipeSwap.Domain/"]
 COPY ["src/SwipeSwap.EntryPoint/SwipeSwap.EntryPoint.csproj", "SwipeSwap.EntryPoint/"]
 COPY ["src/SwipeSwap.Application/SwipeSwap.Application.csproj", "SwipeSwap.Application/"]
+
 
 RUN dotnet restore "SwipeSwap.WebApi/SwipeSwap.WebApi.csproj"
 

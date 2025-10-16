@@ -7,7 +7,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\SwipeSwap.Infrastructure\SwipeSwap.Infrastructure.csproj" />
+        <ProjectReference Include="..\SwipeSwap.Infrastructure.Postgres\SwipeSwap.Infrastructure.Postgres.csproj" />
+        <ProjectReference Include="..\SwipeSwap.Infrastructure.Jwt\SwipeSwap.Infrastructure.Jwt.csproj" />
     </ItemGroup>
 
     <ItemGroup>

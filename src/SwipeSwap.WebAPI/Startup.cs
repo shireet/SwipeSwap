@@ -1,7 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using SwipeSwap.Application;
-using SwipeSwap.Infrastructure;
-using SwipeSwap.Infrastructure.Context;
+using SwipeSwap.Infrastructure.Postgres;
+using SwipeSwap.Infrastructure.Postgres.Context;
+using SwipeSwap.Infrastructure.Jwt;
+using SwipeSwap.Infrastructure.Redis;
 using SwipeSwap.WebApi.Middleware;
 
 namespace SwipeSwap.WebApi;
@@ -19,9 +21,9 @@ public class Startup(IConfiguration configuration)
         services.AddControllers();
         services.AddSwaggerGen();
         services.AddSwaggerGen();
-        services.AddInfrastructure(_configuration);
-
-        services.ConfigJwt(_configuration);
+        services.AddInfrastructurePostgres(_configuration);
+        services.AddInfrastructureJwt(_configuration);
+        services.AddInfrastructureRedis(_configuration);
         services.AddAuthorization();
         services.AddApplication();
     }

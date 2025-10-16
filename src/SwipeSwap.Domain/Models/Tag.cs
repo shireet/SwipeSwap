@@ -4,7 +4,6 @@ public class Tag : BaseEntity
 {
     public string? Name { get; set; }
     public List<ItemTag> ItemTags { get; set; } = [];
-    private Tag()
-    {
-    }
+    public Tag() { }
+    public Tag(string name) => Name = name;
 }

@@ -1,9 +1,11 @@
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using SwipeSwap.Application;
 using SwipeSwap.Infrastructure.Postgres;
 using SwipeSwap.Infrastructure.Postgres.Context;
 using SwipeSwap.Infrastructure.Jwt;
 using SwipeSwap.Infrastructure.Redis;
+using SwipeSwap.WebApi.Filters;
 using SwipeSwap.WebApi.Middleware;
 
 namespace SwipeSwap.WebApi;
@@ -18,7 +20,15 @@ public class Startup(IConfiguration configuration)
         var currentAssembly = typeof(Startup).Assembly;
         services
             .AddMediatR(c => c.RegisterServicesFromAssembly(currentAssembly));
-        services.AddControllers();
+        services.AddControllers(options =>
+            {
+                options.Filters.Add<ValidationFilter>(); 
+            })
+            .AddFluentValidation(fv =>
+            {
+                fv.RegisterValidatorsFromAssembly(currentAssembly);
+                fv.AutomaticValidationEnabled = false;
+            });
         services.AddSwaggerGen();
         services.AddSwaggerGen();
         services.AddInfrastructurePostgres(_configuration);
@@ -30,10 +40,11 @@ public class Startup(IConfiguration configuration)
 
     public void Configure(IApplicationBuilder app)
     {
+        app.UseMiddleware<LoggingMiddleware>();
+        app.UseMiddleware<ExceptionHandlingMiddleware>();
         app.UseRouting();
         app.UseAuthentication();
         app.UseAuthorization();
-        app.UseMiddleware<LoggingMiddleware>();
         app.UseSwagger();
         app.UseSwaggerUI();
         app.UseEndpoints(

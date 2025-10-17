@@ -25,5 +25,10 @@ public class ItemConfigurations : IEntityTypeConfiguration<Item>
         builder.HasMany(i => i.ItemTags)
             .WithOne(t => t.Item)
             .HasForeignKey(t => t.ItemId);
+
+        builder(i => i.City).HasMaxLength(100);
+                b.HasIndex(i => new { i.IsActive, i.CategoryId, i.Condition });
+        b.HasIndex(i => new { i.IsActive, i.City });
+        b.HasIndex(i => new { i.IsActive, i.Price });
     }
 }

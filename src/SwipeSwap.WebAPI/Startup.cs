@@ -1,3 +1,4 @@
+using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using SwipeSwap.Application;
@@ -12,28 +13,26 @@ namespace SwipeSwap.WebApi;
 
 public class Startup(IConfiguration configuration)
 {
-    private readonly IConfiguration _configuration = configuration;
-    
-    [Obsolete("Obsolete")]
     public void ConfigureServices(IServiceCollection services)
     {
         var currentAssembly = typeof(Startup).Assembly;
         services
             .AddMediatR(c => c.RegisterServicesFromAssembly(currentAssembly));
         services.AddControllers(options =>
-            {
-                options.Filters.Add<ValidationFilter>(); 
-            })
-            .AddFluentValidation(fv =>
-            {
-                fv.RegisterValidatorsFromAssembly(currentAssembly);
-                fv.AutomaticValidationEnabled = false;
-            });
-        services.AddSwaggerGen();
-        services.AddSwaggerGen();
-        services.AddInfrastructurePostgres(_configuration);
-        services.AddInfrastructureJwt(_configuration);
-        services.AddInfrastructureRedis(_configuration);
+        {
+            options.Filters.Add<ValidationFilter>();
+        });
+        services.AddValidatorsFromAssembly(currentAssembly);
+
+        services.AddFluentValidationAutoValidation(options =>
+        {
+            options.DisableDataAnnotationsValidation = true;
+        });
+        services.ConfigureSwagger();
+        
+        services.AddInfrastructurePostgres(configuration);
+        services.AddInfrastructureJwt(configuration);
+        services.AddInfrastructureRedis(configuration);
         services.AddAuthorization();
         services.AddApplication();
     }

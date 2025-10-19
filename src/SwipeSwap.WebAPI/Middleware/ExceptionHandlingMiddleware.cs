@@ -28,7 +28,7 @@ public class ExceptionHandlingMiddleware
         {
             await HandleValidationExceptionAsync(context, ex);
         }
-        catch (BusinessException ex)
+        catch (EmailAlreadyInUseException ex)
         {
             await HandleCustomExceptionAsync(context, HttpStatusCode.Conflict, ex.Message);
         }
@@ -36,9 +36,13 @@ public class ExceptionHandlingMiddleware
         {
             await HandleCustomExceptionAsync(context, HttpStatusCode.Unauthorized, ex.Message);
         }
-        catch (KeyNotFoundException ex)
+        catch (UserNotFoundException ex)
         {
             await HandleCustomExceptionAsync(context, HttpStatusCode.NotFound, ex.Message);
+        }
+        catch (BusinessException ex)
+        {
+            await HandleCustomExceptionAsync(context, HttpStatusCode.BadRequest, ex.Message);
         }
         catch (Exception ex)
         {

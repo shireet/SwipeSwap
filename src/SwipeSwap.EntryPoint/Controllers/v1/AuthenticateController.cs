@@ -1,8 +1,6 @@
 using EntryPoint.Dtos;
-using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
-using SwipeSwap.Domain.Exceptions;
 using RegisterUserRequest = SwipeSwap.Application.Auth.Dtos.RegisterUserRequest;
 using LoginUserRequest = SwipeSwap.Application.Auth.Dtos.LoginUserRequest;
 using RefreshTokenRequest = SwipeSwap.Application.Auth.Dtos.RefreshTokenRequest;
@@ -10,7 +8,7 @@ using RefreshTokenRequest = SwipeSwap.Application.Auth.Dtos.RefreshTokenRequest;
 namespace EntryPoint.Controllers.v1;
 
 [ApiController]
-[Route("api/v1/[controller]")] 
+[Route("api/v1/authenticate")] 
 public class AuthenticateController(IMediator mediator) : ControllerBase
 {
     [HttpPost("register")]

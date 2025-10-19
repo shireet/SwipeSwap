@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SwipeSwap.Infrastructure.Postgres.Context;
+using SwipeSwap.Infrastructure.Postgres.Repositories;
 using SwipeSwap.Infrastructure.Postgres.Repositories.Implementations;
 using SwipeSwap.Infrastructure.Postgres.Repositories.Interfaces;
 using SwipeSwap.Infrastructure.Repositories.Implementations;
@@ -17,6 +18,7 @@ public static class DependencyInjection
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
         services.AddScoped<IItemRepository, ItemRepository>();
+        services.AddScoped<IExchangeRepository, ExchangeRepository>();
         return services;
     }
 }

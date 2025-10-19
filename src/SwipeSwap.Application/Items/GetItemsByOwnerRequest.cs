@@ -9,7 +9,7 @@ public sealed class GetItemsByOwnerHandler(IItemRepository items)
 {
     public async Task<List<ItemDto>> Handle(GetItemsByOwnerRequest req, CancellationToken ct)
     {
-        var list = await items.GetByOwnerAsync(req.OwnerId, ct, asNoTracking: true);
+        var list = await items.GetByOwnerAsync(req.OwnerId, ct);
 
         return [.. list.Select(i => new ItemDto(
             Id: i.Id,

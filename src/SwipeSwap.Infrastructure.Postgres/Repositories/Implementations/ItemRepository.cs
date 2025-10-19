@@ -4,7 +4,6 @@ using SwipeSwap.Domain.Models;
 using SwipeSwap.Domain.Models.Enums;
 using SwipeSwap.Domain.Shared;
 using SwipeSwap.Infrastructure.Postgres.Context;
-using SwipeSwap.Infrastructure.Postgres.Context;
 using SwipeSwap.Infrastructure.Repositories.Interfaces;
 
 namespace SwipeSwap.Infrastructure.Repositories.Implementations;
@@ -42,12 +41,10 @@ public class ItemRepository(AppDbContext dbContext) : IItemRepository
                                .Distinct(StringComparer.OrdinalIgnoreCase)
                                .ToArray();
 
-            // Требуем, чтобы у предмета были все указанные теги (AND).
             foreach (var t in normTags)
                 q = q.Where(i => i.ItemTags.Any(it => it.Tag!.Name == t));
         }
 
-        // сортировка
         var sortMap = new Dictionary<string, Expression<Func<Item, object?>>>(
             StringComparer.OrdinalIgnoreCase)
         {
@@ -69,14 +66,13 @@ public class ItemRepository(AppDbContext dbContext) : IItemRepository
         return new PagedResult<Item>(items, total, page, pageSize);
     }
     
-    public async Task<List<Item>> GetByOwnerAsync(int ownerId, CancellationToken ct = default, bool asNoTracking = true)
+    public async Task<List<Item>> GetByOwnerAsync(int ownerId, CancellationToken ct = default)
     {
         IQueryable<Item> q = dbContext.Items
             .Include(i => i.ItemTags)
             .ThenInclude(it => it.Tag)
             .Where(i => i.OwnerId == ownerId);
 
-        if (asNoTracking) q = q.AsNoTracking();
         return await q.ToListAsync(ct);
     }
     public async Task<int> AddTagToItemAsync(int itemId, string tagName)
@@ -141,14 +137,12 @@ public class ItemRepository(AppDbContext dbContext) : IItemRepository
         return item.Id;
     }
 
-    public async Task<Item?> GetByIdAsync(int id, bool asNoTracking = true)
+    public async Task<Item?> GetByIdAsync(int id, CancellationToken ct)
     {
         IQueryable<Item> query = dbContext.Items
             .Include(i => i.ItemTags)
             .ThenInclude(it => it.Tag);
 
-        if (asNoTracking)
-            query = query.AsNoTracking();
         return await query.FirstOrDefaultAsync(i => i.Id == id);
     }
 }

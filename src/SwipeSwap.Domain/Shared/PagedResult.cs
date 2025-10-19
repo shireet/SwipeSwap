@@ -1,5 +1,4 @@
-﻿// src/SwipeSwap.Domain/Shared/PagedResult.cs
-namespace SwipeSwap.Domain.Shared;
+﻿namespace SwipeSwap.Domain.Shared;
 
 public sealed class PagedResult<T>
 {

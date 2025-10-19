@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SwipeSwap.Infrastructure.Postgres.Context;
-using SwipeSwap.Infrastructure.Postgres.Context;
 
 #nullable disable
 

@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 using SwipeSwap.Domain.Models;
 using SwipeSwap.Domain.Models.Enums;
+using SwipeSwap.Domain.Shared;
 using SwipeSwap.Infrastructure.Postgres.Context;
 using SwipeSwap.Infrastructure.Postgres.Context;
 using SwipeSwap.Infrastructure.Repositories.Interfaces;
@@ -13,7 +15,6 @@ public class ItemRepository(AppDbContext dbContext) : IItemRepository
     int page, int pageSize,
     string? sortBy, string? sortDir,
     int? categoryId, ItemCondition? condition,
-    decimal? minPrice, decimal? maxPrice,
     string? city, string? search,
     string[]? tags, bool onlyActive,
     CancellationToken ct = default)
@@ -21,14 +22,12 @@ public class ItemRepository(AppDbContext dbContext) : IItemRepository
         if (page <= 0) page = 1;
         if (pageSize is < 1 or > 100) pageSize = 20;
 
-        IQueryable<Item> q = db.Items.AsNoTracking()
+        IQueryable<Item> q = dbContext.Items.AsNoTracking()
             .Include(i => i.ItemTags).ThenInclude(it => it.Tag);
 
         if (onlyActive) q = q.Where(i => i.IsActive);
         if (categoryId is not null) q = q.Where(i => i.CategoryId == categoryId);
         if (condition is not null) q = q.Where(i => i.Condition == condition);
-        if (minPrice is not null) q = q.Where(i => i.Price != null && i.Price >= minPrice);
-        if (maxPrice is not null) q = q.Where(i => i.Price != null && i.Price <= maxPrice);
         if (!string.IsNullOrWhiteSpace(city)) q = q.Where(i => i.City != null && i.City == city);
         if (!string.IsNullOrWhiteSpace(search))
         {
@@ -52,8 +51,7 @@ public class ItemRepository(AppDbContext dbContext) : IItemRepository
         var sortMap = new Dictionary<string, Expression<Func<Item, object?>>>(
             StringComparer.OrdinalIgnoreCase)
         {
-            ["created"] = i => i.Id,      // surrogate для «по новизне»
-            ["price"] = i => i.Price,
+            ["created"] = i => i.Id,      
             ["title"] = i => i.Title,
             ["city"] = i => i.City
         };
@@ -65,10 +63,10 @@ public class ItemRepository(AppDbContext dbContext) : IItemRepository
         bool desc = string.Equals(sortDir, "desc", StringComparison.OrdinalIgnoreCase);
         q = desc ? q.OrderByDescending(keySelector) : q.OrderBy(keySelector);
 
-        var total = await q.LongCountAsync(ct);
+        var total = await q.CountAsync(ct);
         var items = await q.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync(ct);
 
-        return new PagedResult<Item>(items, page, pageSize, total);
+        return new PagedResult<Item>(items, total, page, pageSize);
     }
     
     public async Task<List<Item>> GetByOwnerAsync(int ownerId, CancellationToken ct = default, bool asNoTracking = true)

@@ -22,8 +22,6 @@ public class ItemsController(IMediator mediator) : ControllerBase
         [FromQuery] string? sortDir = null,   
         [FromQuery] int? categoryId = null,
         [FromQuery] int? condition = null,    
-        [FromQuery] decimal? minPrice = null,
-        [FromQuery] decimal? maxPrice = null,
         [FromQuery] string? city = null,
         [FromQuery] string? search = null,
         [FromQuery] string[]? tags = null,
@@ -32,7 +30,7 @@ public class ItemsController(IMediator mediator) : ControllerBase
         var res = await mediator.Send(new GetCatalogQuery(
             page, pageSize, sortBy, sortDir, categoryId,
             condition is null ? null : (SwipeSwap.Domain.Models.Enums.ItemCondition?)condition,
-            minPrice, maxPrice, city, search, tags, onlyActive));
+             city, search, tags, onlyActive));
 
         return Ok(res);
     }

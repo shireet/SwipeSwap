@@ -1,5 +1,6 @@
 ﻿using SwipeSwap.Domain.Models;
 using SwipeSwap.Domain.Models.Enums;
+using SwipeSwap.Domain.Shared;
 
 namespace SwipeSwap.Infrastructure.Repositories.Interfaces;
 
@@ -10,7 +11,6 @@ public interface IItemRepository
         int page, int pageSize,
         string? sortBy, string? sortDir,
         int? categoryId, ItemCondition? condition,
-        decimal? minPrice, decimal? maxPrice,
         string? city, string? search,
         string[]? tags, bool onlyActive,
         CancellationToken ct = default);

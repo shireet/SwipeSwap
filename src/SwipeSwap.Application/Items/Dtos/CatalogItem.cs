@@ -8,7 +8,6 @@ public record CatalogItem(
     int Id,
     string Title,
     string? Description,
-    decimal? Price,
     string? City,
     int? CategoryId,
     ItemCondition? Condition,

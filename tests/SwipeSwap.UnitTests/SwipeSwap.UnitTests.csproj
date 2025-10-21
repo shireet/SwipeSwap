@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <IsPackable>false</IsPackable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="coverlet.collector"/>
+        <PackageReference Include="Microsoft.NET.Test.Sdk"/>
+        <PackageReference Include="xunit"/>
+        <PackageReference Include="xunit.runner.visualstudio"/>
+        <PackageReference Include="Moq" />
+        <PackageReference Include="FluentAssertions" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Using Include="Xunit"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\src\SwipeSwap.Infrastructure.Jwt\SwipeSwap.Infrastructure.Jwt.csproj" />
+        <ProjectReference Include="..\..\src\SwipeSwap.Infrastructure.Postgres\SwipeSwap.Infrastructure.Postgres.csproj" />
+        <ProjectReference Include="..\..\src\SwipeSwap.WebApi\SwipeSwap.WebApi.csproj" />
+        <ProjectReference Include="..\..\src\SwipeSwap.EntryPoint\SwipeSwap.EntryPoint.csproj" />
+        <ProjectReference Include="..\SwipeSwap.TestInfra\SwipeSwap.TestInfra.csproj" />
+    </ItemGroup>
+
+</Project>

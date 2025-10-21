@@ -19,7 +19,6 @@ public class UpdateCurrentUserHandler(
 
         user.DisplayName = request.DisplayName;
         await userRepository.UpsertAsync(user, cancellationToken);
-
-        return new CurrentUserDto(user.Id, user.DisplayName, user.Email);
+        return new CurrentUserDto(user.Id, user.Email, user.DisplayName);
     }
 }

@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    
+    <ItemGroup>
+        <PackageReference Include="AutoBogus" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" />
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL"  />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" />
+        
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" />
+        
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\src\SwipeSwap.Infrastructure.Postgres\SwipeSwap.Infrastructure.Postgres.csproj" />
+        <ProjectReference Include="..\..\src\SwipeSwap.WebApi\SwipeSwap.WebApi.csproj" />
+    </ItemGroup>
+
+</Project>

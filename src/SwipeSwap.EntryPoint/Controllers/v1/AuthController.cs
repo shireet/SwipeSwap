@@ -13,7 +13,7 @@ namespace EntryPoint.Controllers.v1;
 public class AuthenticateController(IMediator mediator) : ControllerBase
 {
     [HttpPost("register")]
-    public async Task<IActionResult> Register(Dtos.RegisterUserRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> Register(RegisterUserRequest request, CancellationToken cancellationToken)
     {
         try
         {

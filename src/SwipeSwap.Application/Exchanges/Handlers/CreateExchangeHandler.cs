@@ -4,14 +4,14 @@ using SwipeSwap.Application.Exchanges.Dtos;
 using SwipeSwap.Domain.Models;
 using SwipeSwap.Infrastructure.Repositories.Interfaces;
 
-namespace SwipeSwap.Application.Exchanges;
+namespace SwipeSwap.Application.Exchanges.Handlers;
 
 public class CreateExchangeHandler(
     IItemRepository items,
     IExchangeRepository exchanges
-) : IRequestHandler<CreateExchangeCommand, ExchangeDto>
+) : IRequestHandler<CreateExchangeRequest, ExchangeDto>
 {
-    public async Task<ExchangeDto> Handle(CreateExchangeCommand req, CancellationToken ct)
+    public async Task<ExchangeDto> Handle(CreateExchangeRequest req, CancellationToken ct)
     {
         var me = req.InitiatorUserId;
 
@@ -39,14 +39,6 @@ public class CreateExchangeHandler(
         await exchanges.AddAsync(entity, ct);
         await exchanges.SaveChangesAsync(ct); 
 
-        return new ExchangeDto(
-            entity.Id,
-            entity.InitiatorId,
-            entity.ReceiverId,
-            entity.OfferedItemId,
-            entity.RequestedItemId,
-            entity.Status.ToString(), 
-            entity.CreatedAt
-        );
+        return ExchangeDto.FromEntity(entity);
     }
 }

@@ -11,7 +11,6 @@ public class AppDbContext : DbContext
     public DbSet<Item> Items => Set<Item>();
     public DbSet<Tag> Tags => Set<Tag>();
     public DbSet<ItemTag> ItemTags => Set<ItemTag>();
-    public DbSet<Barter> Barters => Set<Barter>();
     public DbSet<Chat> Chats => Set<Chat>();
     public DbSet<Message> Messages => Set<Message>();
     public DbSet<Review> Reviews => Set<Review>();

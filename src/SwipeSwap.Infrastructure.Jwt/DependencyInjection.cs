@@ -5,6 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using SwipeSwap.Infrastructure.Jwt.Auth.Implementations;
 using SwipeSwap.Infrastructure.Jwt.Auth.Interfaces;
+using SwipeSwap.Infrastructure.Jwt.Services.Implementations;
+using SwipeSwap.Infrastructure.Jwt.Services.Interfaces;
 
 namespace SwipeSwap.Infrastructure.Jwt;
 
@@ -14,6 +16,9 @@ public static class DependencyInjection
     {
         services.AddScoped<IJwtService, JwtService>();
         services.ConfigJwt(configuration);
+        
+        services.AddHttpContextAccessor();
+        services.AddScoped<ICurrentUserService, CurrentUserService>();
         return services;
     }
 

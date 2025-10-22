@@ -12,7 +12,9 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="FluentValidation.AspNetCore" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
         <PackageReference Include="MediatR"/>
     </ItemGroup>
+    
 </Project>

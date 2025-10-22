@@ -4,12 +4,15 @@ using System.Security.Claims;
 using EntryPoint.Dtos.items;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using SwipeSwap.Application.Dtos.Items;
+using SwipeSwap.Application.Items.Dtos;
 using SwipeSwap.Application.Items;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Authorization;
+using SwipeSwap.Application.Items.Dtos;
 
 namespace EntryPoint.Controllers.v1;
 
+[Authorize]
 [ApiController]
 [Route("api/v1/[controller]/[action]")]
 public class ItemsController(IMediator mediator) : ControllerBase
@@ -44,7 +47,7 @@ public class ItemsController(IMediator mediator) : ControllerBase
             return Unauthorized();
 
         if (!int.TryParse(idClaim, out var ownerId))
-            return Unauthorized("Invalid user id in token.");
+            return Unauthorized("Произошла ошибка при авторизации.");
 
         var cmd = new DeleteItemRequest(id, ownerId);
         var result = await mediator.Send(cmd);
@@ -55,15 +58,21 @@ public class ItemsController(IMediator mediator) : ControllerBase
     [HttpPatch("{id:int}")]
     public async Task<IActionResult> Update([FromBody] UpdateItem updateItem, [FromQuery] int id)
     {
-        var idClaim = User.FindFirstValue(ClaimTypes.NameIdentifier)
-                      ?? User.FindFirstValue("sub");
-        if (string.IsNullOrWhiteSpace(idClaim))
-            return Unauthorized();
+        var idClaim = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? User.FindFirstValue("sub");
+        if (string.IsNullOrWhiteSpace(idClaim)) return Unauthorized();
+        if (!int.TryParse(idClaim, out var ownerId)) return Unauthorized("Произошла ошибка при авторизации.");
 
-        if (!int.TryParse(idClaim, out var ownerId))
-            return Unauthorized("Invalid user id in token.");
+        var cmd = new UpdateItemRequest(
+            id: id,
+            OwnerId: ownerId,
+            Title: updateItem.Title,
+            Description: updateItem.Description,
+            IsActive: updateItem.IsActive,
+            Tags: updateItem.Tags,
+            Condition: updateItem.Condition,
+            City: updateItem.City
+        );
 
-        var cmd = new UpdateItemRequest(id, ownerId, updateItem.Title, updateItem.Description, updateItem.IsActive, updateItem.Tags);
         var result = await mediator.Send(cmd);
         if (!result) return NotFound();
         return NoContent();
@@ -72,16 +81,15 @@ public class ItemsController(IMediator mediator) : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Add([FromBody] CreateItem createItem)
     {
-
         var idClaim = User.FindFirstValue(ClaimTypes.NameIdentifier)
                       ?? User.FindFirstValue("sub");
         if (string.IsNullOrWhiteSpace(idClaim))
             return Unauthorized();
 
         if (!int.TryParse(idClaim, out var ownerId))
-            return Unauthorized("Invalid user id in token.");
+            return Unauthorized("Произошла ошибка при авторизации.");
 
-        var cmd = new CreateItemRequest(ownerId, createItem.Title, createItem.ImageUrl, createItem.Description, createItem.Tags ?? new());
+        var cmd = new CreateItemRequest(ownerId, createItem.Title, createItem.Description, createItem.ImageUrl,  createItem.Tags ?? new(), createItem.Condition, createItem.City);
         var itemId = await mediator.Send(cmd);
         return CreatedAtAction(nameof(GetById), new { id = itemId }, new { id = itemId });
     }
@@ -95,7 +103,7 @@ public class ItemsController(IMediator mediator) : ControllerBase
             return Unauthorized();
 
         if (!int.TryParse(idClaim, out var ownerId))
-            return Unauthorized("Invalid user id in token.");
+            return Unauthorized("Произошла ошибка при авторизации.");
 
         var result = await mediator.Send(new GetItemsByOwnerRequest(ownerId));
         return Ok(result);

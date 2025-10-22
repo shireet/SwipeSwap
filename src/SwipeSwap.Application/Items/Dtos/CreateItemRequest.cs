@@ -1,6 +1,15 @@
 ﻿
 using MediatR;
+using SwipeSwap.Domain.Models.Enums;
 
 namespace  SwipeSwap.Application.Items;
 
-public record CreateItemRequest(int OwnerId, string Title, string ImageUrl, string? Description, List<string> Tags) : IRequest<int>;
+public record CreateItemRequest(
+    int OwnerId,
+    string Title,
+    string? Description,
+    string? ImageUrl,
+    List<string>? Tags,
+    ItemCondition? Condition,  
+    string? City                
+) : MediatR.IRequest<int>;

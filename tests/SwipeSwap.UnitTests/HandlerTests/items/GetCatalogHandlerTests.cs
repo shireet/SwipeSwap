@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
 using Moq;
-using SwipeSwap.Application.Dtos;                
+using SwipeSwap.Application.Items.Dtos;                
 using SwipeSwap.Application.Items;               
 using SwipeSwap.Domain.Models;                   
 using SwipeSwap.Domain.Models.Enums;             

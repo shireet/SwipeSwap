@@ -1,5 +1,5 @@
 using MediatR;
 
-namespace SwipeSwap.Application.Dtos.Items;
+namespace SwipeSwap.Application.Items.Dtos;
 
 public sealed record GetItemsByOwnerRequest(int OwnerId) : IRequest<List<ItemDto>>;

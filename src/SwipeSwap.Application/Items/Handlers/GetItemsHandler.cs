@@ -1,5 +1,5 @@
 using MediatR;
-using SwipeSwap.Application.Dtos;
+using SwipeSwap.Application.Items.Dtos;
 using SwipeSwap.Domain.Shared;
 using SwipeSwap.Infrastructure.Repositories.Interfaces;
 

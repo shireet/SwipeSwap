@@ -12,7 +12,6 @@ public class DeleteRequestHandler(IItemRepository itemRepository) : IRequestHand
             return false;
 
         item.IsActive = false;
-        // NOTE: Или удалить запись БД
         await itemRepository.UpsertAsync(item);
         return true;
     }

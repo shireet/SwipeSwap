@@ -35,6 +35,7 @@ namespace SwipeSwap.Application.Items
                 OwnerId = req.OwnerId,
                 Title = req.Title,
                 Description = req.Description,
+                ImageUrl = req.ImageUrl,
                 ItemTags = normalizedTags
                     .Select(name => new ItemTag
                     {

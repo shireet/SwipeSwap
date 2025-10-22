@@ -9,6 +9,8 @@ public class Item : BaseEntity
     public string? Description { get; set; }
     public bool IsActive { get; set; } = true;
     
+    public string ? ImageUrl { get; set; }
+    
     public int? CategoryId { get; set; }
     public ItemCondition? Condition { get; set; }
     public string? City { get; set; }

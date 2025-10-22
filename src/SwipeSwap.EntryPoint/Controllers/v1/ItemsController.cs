@@ -81,7 +81,7 @@ public class ItemsController(IMediator mediator) : ControllerBase
         if (!int.TryParse(idClaim, out var ownerId))
             return Unauthorized("Invalid user id in token.");
 
-        var cmd = new CreateItemRequest(ownerId, createItem.Title, createItem.Description, createItem.Tags ?? new());
+        var cmd = new CreateItemRequest(ownerId, createItem.Title, createItem.ImageUrl, createItem.Description, createItem.Tags ?? new());
         var itemId = await mediator.Send(cmd);
         return CreatedAtAction(nameof(GetById), new { id = itemId }, new { id = itemId });
     }

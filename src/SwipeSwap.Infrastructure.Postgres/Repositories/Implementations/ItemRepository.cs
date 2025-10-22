@@ -120,7 +120,7 @@ public class ItemRepository(AppDbContext dbContext) : IItemRepository
         return item.Id;
     }
 
-    public async Task<int> UpsertAsync(Item item)
+    public async Task<int> UpsertAsync(Item item, CancellationToken ct)
     {
         var existingItem = await dbContext.Items.FindAsync(item.Id);
 

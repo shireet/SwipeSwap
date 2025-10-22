@@ -16,6 +16,6 @@ public interface IItemRepository
      Task<List<Item>> GetByOwnerAsync(int ownerId, CancellationToken ct = default);
     Task<int> AddTagToItemAsync(int itemId, string tagName);
     Task<int> RemoveTagFromItemAsync(int itemId, string tagName);
-    Task<int> UpsertAsync(Item item);
+    Task<int> UpsertAsync(Item item, CancellationToken ct = default);
     Task<Item?> GetByIdAsync(int id, CancellationToken ct = default);
 }

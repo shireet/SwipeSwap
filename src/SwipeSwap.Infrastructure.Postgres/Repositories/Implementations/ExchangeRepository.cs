@@ -1,7 +1,6 @@
-// SwipeSwap.Infrastructure.Postgres/Repositories/Implementations/ExchangeRepository.cs
 using Microsoft.EntityFrameworkCore;
 using SwipeSwap.Domain.Models;
-using SwipeSwap.Domain.Models.Enums;              // <-- чтобы видеть ExchangeStatus
+using SwipeSwap.Domain.Models.Enums;            
 using SwipeSwap.Infrastructure.Postgres.Context;
 using SwipeSwap.Infrastructure.Repositories.Interfaces;
 
@@ -18,7 +17,6 @@ public sealed class ExchangeRepository : IExchangeRepository
         int requestedItemId,
         CancellationToken ct)
     {
-        // Без Contains: прямое сравнение enum — и чище, и без Linq
         return _db.Set<Exchange>()
             .AsNoTracking()
             .AnyAsync(x =>
@@ -35,6 +33,5 @@ public sealed class ExchangeRepository : IExchangeRepository
     public Task<Exchange?> GetByIdAsync(int id, CancellationToken ct) =>
         _db.Set<Exchange>().AsNoTracking().FirstOrDefaultAsync(x => x.Id == id, ct);
 
-    // Если оставляешь вариант без UnitOfWork:
     public Task SaveChangesAsync(CancellationToken ct) => _db.SaveChangesAsync(ct);
 }

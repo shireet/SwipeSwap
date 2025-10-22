@@ -8,7 +8,7 @@ public class ItemTag : BaseEntity
     public int TagId { get; set; }
     public virtual Tag Tag { get; set; } = null!;
 
-    private ItemTag()
+    public ItemTag()
     {
     }
 }

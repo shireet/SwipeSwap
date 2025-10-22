@@ -19,11 +19,19 @@ public class ItemConfigurations : IEntityTypeConfiguration<Item>
         builder.Property(i => i.Description)
             .HasMaxLength(1000);
 
+        builder.Property(i => i.City)
+            .HasMaxLength(100);
+
         builder.Property(i => i.IsActive)
             .HasDefaultValue(true);
 
         builder.HasMany(i => i.ItemTags)
             .WithOne(t => t.Item)
-            .HasForeignKey(t => t.ItemId);
+            .HasForeignKey(t => t.ItemId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasIndex(i => new { i.IsActive, i.CategoryId, i.Condition });
+        builder.HasIndex(i => new { i.IsActive, i.City });
+
     }
 }

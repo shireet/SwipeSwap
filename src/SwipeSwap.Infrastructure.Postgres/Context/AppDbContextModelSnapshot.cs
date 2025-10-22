@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SwipeSwap.Infrastructure.Postgres.Context;
-using SwipeSwap.Infrastructure.Postgres.Context;
 
 #nullable disable
 
@@ -333,6 +332,54 @@ namespace SwipeSwap.Infrastructure.Postgres.Migrations
             modelBuilder.Entity("SwipeSwap.Domain.Models.Tag", b =>
                 {
                     b.Navigation("ItemTags");
+                });
+
+            modelBuilder.Entity("SwipeSwap.Domain.Models.Exchange", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("InitiatorId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ReceiverId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("OfferedItemId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("RequestedItemId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Message")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InitiatorId", "Status");
+                    b.HasIndex("ReceiverId", "Status");
+
+                    b.HasIndex("InitiatorId", "OfferedItemId", "RequestedItemId")
+                        .IsUnique()
+                        .HasDatabaseName("ux_exchanges_open_pair")
+                        .HasFilter("\"Status\" IN ('Sent','Accepted')");
+
+                    b.ToTable("exchanges", (string)null);
                 });
 #pragma warning restore 612, 618
         }

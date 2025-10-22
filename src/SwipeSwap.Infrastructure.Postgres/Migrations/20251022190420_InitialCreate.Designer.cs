@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SwipeSwap.Infrastructure.Postgres.Context;
@@ -11,9 +12,11 @@ using SwipeSwap.Infrastructure.Postgres.Context;
 namespace SwipeSwap.Infrastructure.Postgres.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251022190420_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,36 +24,6 @@ namespace SwipeSwap.Infrastructure.Postgres.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
-
-            modelBuilder.Entity("SwipeSwap.Domain.Models.Barter", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ChatId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("InitiatorUserId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("ItemAId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("ItemBId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("barters", (string)null);
-                });
 
             modelBuilder.Entity("SwipeSwap.Domain.Models.Chat", b =>
                 {
@@ -68,6 +41,48 @@ namespace SwipeSwap.Infrastructure.Postgres.Migrations
                     b.ToTable("chats", (string)null);
                 });
 
+            modelBuilder.Entity("SwipeSwap.Domain.Models.Exchange", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("InitiatorId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Message")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<int>("OfferedItemId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ReceiverId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("RequestedItemId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InitiatorId", "Status");
+
+                    b.HasIndex("ReceiverId", "Status");
+
+                    b.ToTable("exchanges", (string)null);
+                });
+
             modelBuilder.Entity("SwipeSwap.Domain.Models.Item", b =>
                 {
                     b.Property<int>("Id")
@@ -76,9 +91,22 @@ namespace SwipeSwap.Infrastructure.Postgres.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("CategoryId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("City")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<int?>("Condition")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Description")
                         .HasMaxLength(1000)
                         .HasColumnType("character varying(1000)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("text");
 
                     b.Property<bool>("IsActive")
                         .ValueGeneratedOnAdd()
@@ -96,6 +124,10 @@ namespace SwipeSwap.Infrastructure.Postgres.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("OwnerId");
+
+                    b.HasIndex("IsActive", "City");
+
+                    b.HasIndex("IsActive", "CategoryId", "Condition");
 
                     b.ToTable("items", (string)null);
                 });
@@ -332,54 +364,6 @@ namespace SwipeSwap.Infrastructure.Postgres.Migrations
             modelBuilder.Entity("SwipeSwap.Domain.Models.Tag", b =>
                 {
                     b.Navigation("ItemTags");
-                });
-
-            modelBuilder.Entity("SwipeSwap.Domain.Models.Exchange", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("InitiatorId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("ReceiverId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("OfferedItemId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("RequestedItemId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Message")
-                        .HasMaxLength(1000)
-                        .HasColumnType("character varying(1000)");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("InitiatorId", "Status");
-                    b.HasIndex("ReceiverId", "Status");
-
-                    b.HasIndex("InitiatorId", "OfferedItemId", "RequestedItemId")
-                        .IsUnique()
-                        .HasDatabaseName("ux_exchanges_open_pair")
-                        .HasFilter("\"Status\" IN ('Sent','Accepted')");
-
-                    b.ToTable("exchanges", (string)null);
                 });
 #pragma warning restore 612, 618
         }

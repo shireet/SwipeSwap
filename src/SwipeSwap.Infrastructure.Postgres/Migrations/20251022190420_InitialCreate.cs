@@ -13,23 +13,6 @@ namespace SwipeSwap.Infrastructure.Postgres.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "barters",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    ItemAId = table.Column<int>(type: "integer", nullable: false),
-                    ItemBId = table.Column<int>(type: "integer", nullable: false),
-                    InitiatorUserId = table.Column<int>(type: "integer", nullable: false),
-                    Status = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    ChatId = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_barters", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "chats",
                 columns: table => new
                 {
@@ -40,6 +23,26 @@ namespace SwipeSwap.Infrastructure.Postgres.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_chats", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "exchanges",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    InitiatorId = table.Column<int>(type: "integer", nullable: false),
+                    ReceiverId = table.Column<int>(type: "integer", nullable: false),
+                    OfferedItemId = table.Column<int>(type: "integer", nullable: false),
+                    RequestedItemId = table.Column<int>(type: "integer", nullable: false),
+                    Message = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: true),
+                    Status = table.Column<int>(type: "integer", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_exchanges", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -101,7 +104,11 @@ namespace SwipeSwap.Infrastructure.Postgres.Migrations
                     OwnerId = table.Column<int>(type: "integer", nullable: false),
                     Title = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false),
                     Description = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: true),
-                    IsActive = table.Column<bool>(type: "boolean", nullable: false, defaultValue: true)
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false, defaultValue: true),
+                    ImageUrl = table.Column<string>(type: "text", nullable: true),
+                    CategoryId = table.Column<int>(type: "integer", nullable: true),
+                    Condition = table.Column<int>(type: "integer", nullable: true),
+                    City = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -109,6 +116,28 @@ namespace SwipeSwap.Infrastructure.Postgres.Migrations
                     table.ForeignKey(
                         name: "FK_items_users_OwnerId",
                         column: x => x.OwnerId,
+                        principalTable: "users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "refresh_tokens",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    Token = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    ExpiresAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Revoked = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_refresh_tokens", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_refresh_tokens_users_UserId",
+                        column: x => x.UserId,
                         principalTable: "users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -163,9 +192,29 @@ namespace SwipeSwap.Infrastructure.Postgres.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_exchanges_InitiatorId_Status",
+                table: "exchanges",
+                columns: new[] { "InitiatorId", "Status" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_exchanges_ReceiverId_Status",
+                table: "exchanges",
+                columns: new[] { "ReceiverId", "Status" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_item_tags_TagId",
                 table: "item_tags",
                 column: "TagId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_items_IsActive_CategoryId_Condition",
+                table: "items",
+                columns: new[] { "IsActive", "CategoryId", "Condition" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_items_IsActive_City",
+                table: "items",
+                columns: new[] { "IsActive", "City" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_items_OwnerId",
@@ -176,6 +225,17 @@ namespace SwipeSwap.Infrastructure.Postgres.Migrations
                 name: "IX_messages_ChatId",
                 table: "messages",
                 column: "ChatId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_refresh_tokens_Token",
+                table: "refresh_tokens",
+                column: "Token",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_refresh_tokens_UserId",
+                table: "refresh_tokens",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_reviews_ToUserId",
@@ -193,13 +253,16 @@ namespace SwipeSwap.Infrastructure.Postgres.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "barters");
+                name: "exchanges");
 
             migrationBuilder.DropTable(
                 name: "item_tags");
 
             migrationBuilder.DropTable(
                 name: "messages");
+
+            migrationBuilder.DropTable(
+                name: "refresh_tokens");
 
             migrationBuilder.DropTable(
                 name: "reviews");

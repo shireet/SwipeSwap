@@ -1,8 +1,6 @@
-﻿
-using MediatR;
-using SwipeSwap.Domain.Models.Enums;
+﻿using SwipeSwap.Domain.Models.Enums;
 
-namespace  SwipeSwap.Application.Items;
+namespace  SwipeSwap.Application.Items.Dtos;
 
 public record CreateItemRequest(
     int OwnerId,

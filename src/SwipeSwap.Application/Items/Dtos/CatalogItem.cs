@@ -1,5 +1,3 @@
-
-
 using SwipeSwap.Domain.Models.Enums;
 
 namespace SwipeSwap.Application.Items.Dtos;

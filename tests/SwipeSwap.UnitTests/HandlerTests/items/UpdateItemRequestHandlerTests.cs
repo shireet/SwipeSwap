@@ -1,14 +1,10 @@
-﻿using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Moq;
-using SwipeSwap.Application.Items;
 using SwipeSwap.Application.Items.Dtos;
-using SwipeSwap.Domain.Models;                  
-using SwipeSwap.Infrastructure.Repositories.Interfaces;
-using Xunit;
+using SwipeSwap.Application.Items.Handlers;
+using SwipeSwap.Domain.Models;
+using SwipeSwap.Infrastructure.Postgres.Repositories.Interfaces;
+
 
 namespace SwipeSwap.UnitTests.HandlerTests.Items;
 

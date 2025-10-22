@@ -1,10 +1,9 @@
 ﻿using MediatR;
+using SwipeSwap.Application.Items.Dtos;
 using SwipeSwap.Domain.Models;
-using SwipeSwap.Domain.Models.Enums;
-using SwipeSwap.Infrastructure.Postgres.Repositories.Interfaces; 
-using SwipeSwap.Infrastructure.Repositories.Interfaces;
+using SwipeSwap.Infrastructure.Postgres.Repositories.Interfaces;
 
-namespace SwipeSwap.Application.Items
+namespace SwipeSwap.Application.Items.Handlers
 {
     public class CreateRequestHandler : IRequestHandler<CreateItemRequest, int>
     {

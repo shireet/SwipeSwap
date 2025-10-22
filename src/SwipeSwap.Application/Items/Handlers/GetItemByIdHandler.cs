@@ -1,7 +1,8 @@
 ﻿using MediatR;
-using SwipeSwap.Infrastructure.Repositories.Interfaces;
+using SwipeSwap.Application.Items.Dtos;
+using SwipeSwap.Infrastructure.Postgres.Repositories.Interfaces;
 
-namespace SwipeSwap.Application.Items;
+namespace SwipeSwap.Application.Items.Handlers;
 
 public class GetItemByIdHandler(IItemRepository repo)
     : IRequestHandler<GetItemByIdQuery, ItemDto?>

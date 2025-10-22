@@ -2,7 +2,7 @@ using MediatR;
 using SwipeSwap.Application.Common.Exceptions;
 using SwipeSwap.Application.Exchanges.Dtos;
 using SwipeSwap.Domain.Models;
-using SwipeSwap.Infrastructure.Repositories.Interfaces;
+using SwipeSwap.Infrastructure.Postgres.Repositories.Interfaces;
 
 namespace SwipeSwap.Application.Exchanges.Handlers;
 

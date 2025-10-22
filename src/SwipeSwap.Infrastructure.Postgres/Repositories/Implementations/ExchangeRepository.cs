@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using SwipeSwap.Domain.Models;
 using SwipeSwap.Domain.Models.Enums;            
 using SwipeSwap.Infrastructure.Postgres.Context;
-using SwipeSwap.Infrastructure.Repositories.Interfaces;
+using SwipeSwap.Infrastructure.Postgres.Repositories.Interfaces;
 
 namespace SwipeSwap.Infrastructure.Postgres.Repositories.Implementations;
 

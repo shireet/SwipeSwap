@@ -4,7 +4,7 @@ using SwipeSwap.Application.Items.Dtos;
 using SwipeSwap.Application.Items;
 using SwipeSwap.Application.Items.Handlers;
 using SwipeSwap.Domain.Models;
-using SwipeSwap.Infrastructure.Repositories.Interfaces; 
+using SwipeSwap.Infrastructure.Postgres.Repositories.Interfaces;
 using Xunit;
 
 namespace SwipeSwap.UnitTests.HandlerTests.Items;

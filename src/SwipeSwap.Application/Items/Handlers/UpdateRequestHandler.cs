@@ -1,7 +1,8 @@
 ﻿using MediatR;
-using SwipeSwap.Application.Items;
 using SwipeSwap.Application.Items.Dtos;
-using SwipeSwap.Infrastructure.Repositories.Interfaces;
+using SwipeSwap.Infrastructure.Postgres.Repositories.Interfaces;
+
+namespace SwipeSwap.Application.Items.Handlers;
 
 public class UpdateRequestHandler(IItemRepository repo)
     : IRequestHandler<UpdateItemRequest, bool>

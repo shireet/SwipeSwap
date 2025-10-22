@@ -1,14 +1,10 @@
-﻿
-
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using EntryPoint.Dtos.items;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SwipeSwap.Application.Items.Dtos;
-using SwipeSwap.Application.Items;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
-using SwipeSwap.Application.Items.Dtos;
 
 namespace EntryPoint.Controllers.v1;
 

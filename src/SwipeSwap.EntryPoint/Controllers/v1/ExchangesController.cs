@@ -1,9 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SwipeSwap.Application.Exchanges;
 using SwipeSwap.Application.Exchanges.Dtos;
-using SwipeSwap.Application.Exchanges.Handlers;
 using SwipeSwap.EntryPoint.Dtos.Exchanges;
 
 namespace EntryPoint.Controllers.v1;

@@ -4,8 +4,8 @@ using FluentAssertions;
 using Moq;
 using SwipeSwap.Application.Exchanges.Dtos;
 using SwipeSwap.Application.Exchanges.Handlers;
-using SwipeSwap.Infrastructure.Repositories.Interfaces;
 using SwipeSwap.Domain.Models;
+using SwipeSwap.Infrastructure.Postgres.Repositories.Interfaces;
 using Xunit;
 
 namespace SwipeSwap.Application.Tests.Exchanges;

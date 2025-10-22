@@ -1,9 +1,8 @@
 using MediatR;
-using SwipeSwap.Application.Items.Dtos;
 using SwipeSwap.Domain.Models.Enums;
 using SwipeSwap.Domain.Shared;
 
-namespace SwipeSwap.Application.Items;
+namespace SwipeSwap.Application.Items.Dtos;
 
 public record GetCatalogQuery(
     int Page = 1,

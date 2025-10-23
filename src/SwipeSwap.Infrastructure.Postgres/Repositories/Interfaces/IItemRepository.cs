@@ -6,6 +6,7 @@ namespace SwipeSwap.Infrastructure.Postgres.Repositories.Interfaces;
 
 public interface IItemRepository
 {
+    IQueryable<Item> Items { get; }
     Task<PagedResult<Item>> GetCatalogAsync(
         int page, int pageSize,
         string? sortBy, string? sortDir,

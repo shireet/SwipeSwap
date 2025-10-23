@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using SwipeSwap.Application.Items.Dtos;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
+using SwipeSwap.Application.Items;
 
 namespace EntryPoint.Controllers.v1;
 
@@ -13,6 +14,49 @@ namespace EntryPoint.Controllers.v1;
 [Route("api/v1/[controller]/[action]")]
 public class ItemsController(IMediator mediator) : ControllerBase
 {
+    [HttpGet("recommended")]
+    public async Task<IActionResult> Recommended(
+        [FromQuery] int page = 1,
+        [FromQuery, Range(1, 100)] int pageSize = 20)
+    {
+        var idClaim = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? User.FindFirstValue("sub");
+        if (string.IsNullOrWhiteSpace(idClaim)) return Unauthorized();
+        if (!int.TryParse(idClaim, out var userId)) return Unauthorized("Произошла ошибка при авторизации.");
+
+        var mockResult = new List<CatalogItem>
+        {
+            new(
+                Id: 1,
+                Title: "Гитара Fender",
+                Description: "Электрогитара в отличном состоянии",
+                City: "Москва",
+                CategoryId: 2,
+                Condition: SwipeSwap.Domain.Models.Enums.ItemCondition.Good,
+                Tags: new[] { "музыка", "инструменты" }
+            ),
+            new(
+                Id: 2,
+                Title: "Велосипед Cube",
+                Description: "Почти новый горный велосипед",
+                City: "Санкт-Петербург",
+                CategoryId: 3,
+                Condition: SwipeSwap.Domain.Models.Enums.ItemCondition.New,
+                Tags: new[] { "спорт", "транспорт" }
+            ),
+            new(
+                Id: 3,
+                Title: "Книга C# для начинающих",
+                Description: "Отличное состояние, мягкая обложка",
+                City: "Казань",
+                CategoryId: 4,
+                Condition: SwipeSwap.Domain.Models.Enums.ItemCondition.Good,
+                Tags: new[] { "книги", "программирование" }
+            )
+        };
+        return Ok(mockResult);
+    }
+
+    
     [HttpGet("catalog")]
     public async Task<IActionResult> Catalog(
         [FromQuery] int page = 1,

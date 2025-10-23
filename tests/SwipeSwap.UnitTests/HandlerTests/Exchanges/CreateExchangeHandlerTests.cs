@@ -9,7 +9,7 @@ using SwipeSwap.Application.Exchanges.Dtos;
 using SwipeSwap.Application.Exchanges.Handlers;
 using SwipeSwap.Domain.Models;
 using SwipeSwap.Domain.Models.Enums;
-using SwipeSwap.Infrastructure.Repositories.Interfaces;
+using SwipeSwap.Infrastructure.Postgres.Repositories.Interfaces;
 using Xunit;
 
 namespace SwipeSwap.UnitTests.HandlerTests.Exchanges;

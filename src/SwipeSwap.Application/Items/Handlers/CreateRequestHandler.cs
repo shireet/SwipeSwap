@@ -1,11 +1,9 @@
-﻿
-using MediatR;
+﻿using MediatR;
+using SwipeSwap.Application.Items.Dtos;
 using SwipeSwap.Domain.Models;
+using SwipeSwap.Infrastructure.Postgres.Repositories.Interfaces;
 
-using SwipeSwap.Infrastructure.Postgres.Repositories.Interfaces; 
-using SwipeSwap.Infrastructure.Repositories.Interfaces;
-
-namespace SwipeSwap.Application.Items
+namespace SwipeSwap.Application.Items.Handlers
 {
     public class CreateRequestHandler : IRequestHandler<CreateItemRequest, int>
     {
@@ -22,7 +20,7 @@ namespace SwipeSwap.Application.Items
         {
             var ownerExists = await _users.GetUserAsync(req.OwnerId, cancellationToken);
             if (ownerExists == null)
-                throw new InvalidOperationException("Owner user does not exist.");
+                throw new InvalidOperationException("Пользователь не существует.");
 
             var normalizedTags = (req.Tags ?? new List<string>())
                 .Where(t => !string.IsNullOrWhiteSpace(t))
@@ -36,11 +34,10 @@ namespace SwipeSwap.Application.Items
                 Title = req.Title,
                 Description = req.Description,
                 ImageUrl = req.ImageUrl,
+                Condition = req.Condition,                                   
+                City = string.IsNullOrWhiteSpace(req.City) ? null : req.City.Trim(), 
                 ItemTags = normalizedTags
-                    .Select(name => new ItemTag
-                    {
-                        Tag = new Tag { Name = name }
-                    })
+                    .Select(name => new ItemTag { Tag = new Tag { Name = name } })
                     .ToList()
             };
 

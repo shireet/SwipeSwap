@@ -1,8 +1,8 @@
 using MediatR;
-using SwipeSwap.Application.Dtos.Items;
-using SwipeSwap.Infrastructure.Repositories.Interfaces;
+using SwipeSwap.Application.Items.Dtos;
+using SwipeSwap.Infrastructure.Postgres.Repositories.Interfaces;
 
-namespace SwipeSwap.Application.Items;
+namespace SwipeSwap.Application.Items.Handlers;
 
 public sealed class GetItemsByOwnerHandler(IItemRepository items)
     : IRequestHandler<GetItemsByOwnerRequest, List<ItemDto>>

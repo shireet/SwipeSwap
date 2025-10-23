@@ -1,9 +1,9 @@
 using MediatR;
-using SwipeSwap.Application.Dtos;
+using SwipeSwap.Application.Items.Dtos;
 using SwipeSwap.Domain.Shared;
-using SwipeSwap.Infrastructure.Repositories.Interfaces;
+using SwipeSwap.Infrastructure.Postgres.Repositories.Interfaces;
 
-namespace SwipeSwap.Application.Items;
+namespace SwipeSwap.Application.Items.Handlers;
 
 public class GetCatalogHandler(IItemRepository repo)
     : IRequestHandler<GetCatalogQuery, PagedResult<CatalogItem>>

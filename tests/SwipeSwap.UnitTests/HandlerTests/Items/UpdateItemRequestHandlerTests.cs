@@ -1,13 +1,10 @@
-﻿using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Moq;
-using SwipeSwap.Application.Items;              
-using SwipeSwap.Domain.Models;                  
-using SwipeSwap.Infrastructure.Repositories.Interfaces;
-using Xunit;
+using SwipeSwap.Application.Items.Dtos;
+using SwipeSwap.Application.Items.Handlers;
+using SwipeSwap.Domain.Models;
+using SwipeSwap.Infrastructure.Postgres.Repositories.Interfaces;
+
 
 namespace SwipeSwap.UnitTests.HandlerTests.Items;
 
@@ -163,27 +160,31 @@ public class UpdateItemRequestHandlerTests
         _repo.Verify(r => r.RemoveTagFromItemAsync(20, "c"), Times.Once);
     }
 
-    [Fact(DisplayName = "Обновление: Tags = null — текущее поведение хэндлера: NullReferenceException")]
-    public async Task Handle_NullTags_Throws()
+    [Fact(DisplayName = "Обновление: Tags = null — теги не трогаем, только сохранение сущности")]
+    public async Task Handle_NullTags_SkipsTags_OnlySave()
     {
         // Arrange
         var dbItem = MakeItem(id: 33, ownerId: 9, title: "T", desc: "D", isActive: false, "x");
         _repo.Setup(r => r.GetByIdAsync(33, It.IsAny<CancellationToken>())).ReturnsAsync(dbItem);
+        _repo.Setup(r => r.UpsertAsync(It.IsAny<Item>(), It.IsAny<CancellationToken>())).ReturnsAsync(1);
 
         var handler = new UpdateRequestHandler(_repo.Object);
 
         var req = new UpdateItemRequest(
             id: 33, OwnerId: 9,
-            Title: "T", Description: "D",
-            IsActive: false, Tags: null! 
+            Title: "T2", Description: "D2",
+            IsActive: false, Tags: null,     
+            Condition: null, City: null
         );
 
         // Act
-        var act = async () => await handler.Handle(req, CancellationToken.None);
+        var ok = await handler.Handle(req, CancellationToken.None);
 
         // Assert
-        await act.Should().ThrowAsync<ArgumentNullException>();
-        _repo.Verify(r => r.UpsertAsync(It.IsAny<Item>(), It.IsAny<CancellationToken>()), Times.Never);
+        ok.Should().BeTrue();
+        _repo.Verify(r => r.AddTagToItemAsync(It.IsAny<int>(), It.IsAny<string>()), Times.Never);
+        _repo.Verify(r => r.RemoveTagFromItemAsync(It.IsAny<int>(), It.IsAny<string>()), Times.Never);
+        _repo.Verify(r => r.UpsertAsync(It.Is<Item>(i => i.Title == "T2" && i.Description == "D2"), It.IsAny<CancellationToken>()), Times.Once);
     }
 
     [Fact(DisplayName = "Обновление: без изменения тегов — Add/Remove не вызываются, только сохранение сущности")]
@@ -198,7 +199,9 @@ public class UpdateItemRequestHandlerTests
         var req = new UpdateItemRequest(
             id: 44, OwnerId: 1,
             Title: "New", Description: "New",
-            IsActive: null, Tags: new List<string> { "m", "n" } 
+            IsActive: null, Tags: new List<string> { "m", "n" },
+            City: null,
+            Condition: null
         );
 
         // Act

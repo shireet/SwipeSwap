@@ -1,11 +1,12 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SwipeSwap.Application.Exchanges;
 using SwipeSwap.Application.Exchanges.Dtos;
 using SwipeSwap.EntryPoint.Dtos.Exchanges;
 
 namespace EntryPoint.Controllers.v1;
 
+[Authorize]
 [ApiController]
 [Route("api/v1/[controller]")]
 public class ExchangesController(IMediator mediator) : ControllerBase
@@ -54,6 +55,8 @@ public class ExchangesController(IMediator mediator) : ControllerBase
     [HttpGet("{id:int}")]
     public async Task<ActionResult<ExchangeDto>> GetById(int id, CancellationToken ct)
     {
-        return Ok(); 
+        var dto = await mediator.Send(new GetExchangeRequest(id), ct);
+        if (dto is null) return NotFound();
+        return Ok(dto);
     }
 }

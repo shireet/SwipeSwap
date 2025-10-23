@@ -1,7 +1,6 @@
 using MediatR;
-using SwipeSwap.Application.Exchanges.Dtos;
 
-namespace SwipeSwap.Application.Exchanges;
+namespace SwipeSwap.Application.Exchanges.Dtos;
 
 public record CreateExchangeRequest(
     int InitiatorUserId,

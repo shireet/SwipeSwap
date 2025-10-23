@@ -2,7 +2,7 @@
 using SwipeSwap.Domain.Models.Enums;
 using SwipeSwap.Domain.Shared;
 
-namespace SwipeSwap.Infrastructure.Repositories.Interfaces;
+namespace SwipeSwap.Infrastructure.Postgres.Repositories.Interfaces;
 
 public interface IItemRepository
 {

@@ -5,8 +5,6 @@ using SwipeSwap.Infrastructure.Postgres.Context;
 using SwipeSwap.Infrastructure.Postgres.Repositories;
 using SwipeSwap.Infrastructure.Postgres.Repositories.Implementations;
 using SwipeSwap.Infrastructure.Postgres.Repositories.Interfaces;
-using SwipeSwap.Infrastructure.Repositories.Implementations;
-using SwipeSwap.Infrastructure.Repositories.Interfaces;
 
 namespace SwipeSwap.Infrastructure.Postgres;
 

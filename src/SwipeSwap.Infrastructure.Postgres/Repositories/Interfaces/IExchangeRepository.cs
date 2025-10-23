@@ -1,6 +1,6 @@
 using SwipeSwap.Domain.Models;
 
-namespace SwipeSwap.Infrastructure.Repositories.Interfaces;
+namespace SwipeSwap.Infrastructure.Postgres.Repositories.Interfaces;
 
 public interface IExchangeRepository
 {

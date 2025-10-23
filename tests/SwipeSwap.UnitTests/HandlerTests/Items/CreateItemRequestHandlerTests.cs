@@ -1,10 +1,10 @@
 ﻿using FluentAssertions;
 using Moq;
-using SwipeSwap.Application.Items;
+using SwipeSwap.Application.Items.Dtos;
+using SwipeSwap.Application.Items.Handlers;
 using SwipeSwap.Domain.Models;
-using SwipeSwap.Infrastructure.Postgres.Repositories.Interfaces;    
-using SwipeSwap.Infrastructure.Repositories.Interfaces;         
-using Xunit;
+using SwipeSwap.Domain.Models.Enums;
+using SwipeSwap.Infrastructure.Postgres.Repositories.Interfaces;
 
 namespace SwipeSwap.UnitTests.HandlerTests.Items;
 
@@ -47,7 +47,9 @@ public class CreateItemRequestHandlerTests
             Title: "Mountain Bike",
             ImageUrl: imageUrl,
             Description: "Good condition",
-            Tags: new List<string> { "sport", "bike" }
+            Tags: new List<string> { "sport", "bike" },
+            Condition: ItemCondition.Fair,
+            City: "Волгоград"        
         );
 
         // Act
@@ -82,7 +84,9 @@ public class CreateItemRequestHandlerTests
             Title: "Anything",
             ImageUrl: "https://x/any.jpg",
             Description: "Doesn't matter",
-            Tags: new List<string> { "tag" }
+            Tags: new List<string> { "tag" },
+            Condition: ItemCondition.Good,
+            City: "Санкт-Петербург"        
         );
 
         // Act
@@ -90,7 +94,7 @@ public class CreateItemRequestHandlerTests
 
         // Assert
         await act.Should().ThrowAsync<InvalidOperationException>()
-            .WithMessage("Owner user does not exist.");
+            .WithMessage("Пользователь не существует.");
 
         _itemRepo.Verify(x => x.UpsertAsync(It.IsAny<Item>(), It.IsAny<CancellationToken>()), Times.Never);
     }
@@ -127,7 +131,9 @@ public class CreateItemRequestHandlerTests
                 "   ",
                 null,
                 "TagTwo "
-            }!.Where(s => s is not null).Select(s => s!).ToList()
+            }!.Where(s => s is not null).Select(s => s!).ToList(),
+            Condition: ItemCondition.LikeNew,
+            City: "Казань"        
         );
 
         // Act
@@ -165,7 +171,9 @@ public class CreateItemRequestHandlerTests
             Title: "No tags item",
             ImageUrl: "https://cdn/no-tags.jpg",
             Description: "Empty tags",
-            Tags: null! 
+            Tags: null!,
+            Condition: ItemCondition.Poor,
+            City: "Новосибирск"        
         );
 
         // Act

@@ -1,8 +1,6 @@
-
-
 using SwipeSwap.Domain.Models.Enums;
 
-namespace SwipeSwap.Application.Dtos;
+namespace SwipeSwap.Application.Items.Dtos;
 
 public record CatalogItem(
     int Id,

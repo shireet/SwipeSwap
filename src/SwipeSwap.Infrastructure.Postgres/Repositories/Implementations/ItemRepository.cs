@@ -4,9 +4,9 @@ using SwipeSwap.Domain.Models;
 using SwipeSwap.Domain.Models.Enums;
 using SwipeSwap.Domain.Shared;
 using SwipeSwap.Infrastructure.Postgres.Context;
-using SwipeSwap.Infrastructure.Repositories.Interfaces;
+using SwipeSwap.Infrastructure.Postgres.Repositories.Interfaces;
 
-namespace SwipeSwap.Infrastructure.Repositories.Implementations;
+namespace SwipeSwap.Infrastructure.Postgres.Repositories.Implementations;
 
 public class ItemRepository(AppDbContext dbContext) : IItemRepository
 {

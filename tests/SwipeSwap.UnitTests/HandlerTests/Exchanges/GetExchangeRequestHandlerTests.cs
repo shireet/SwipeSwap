@@ -1,14 +1,11 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Moq;
 using SwipeSwap.Application.Exchanges.Dtos;
 using SwipeSwap.Application.Exchanges.Handlers;
 using SwipeSwap.Domain.Models;
 using SwipeSwap.Infrastructure.Postgres.Repositories.Interfaces;
-using Xunit;
 
-namespace SwipeSwap.Application.Tests.Exchanges;
+namespace SwipeSwap.UnitTests.HandlerTests.Exchanges;
 
 public class GetExchangeRequestHandlerTests
 {

@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using SwipeSwap.Application.Chat.Dtos;
 using SwipeSwap.Infrastructure.Postgres.Context;
 
+namespace SwipeSwap.Application.Chat;
+
 public class GetChatMessagesRequest : IRequest<List<MessageDto>>
 {
     public int ChatId { get; set; }

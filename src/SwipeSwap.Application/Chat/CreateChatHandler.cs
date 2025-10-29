@@ -2,7 +2,8 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SwipeSwap.Application.Chat.Dtos;
 using SwipeSwap.Infrastructure.Postgres.Context;
-using SwipeSwap.Domain.Models;
+
+namespace SwipeSwap.Application.Chat;
 
 public class CreateChatHandler : IRequestHandler<CreateChatRequest, ChatDto>
 {
@@ -15,7 +16,7 @@ public class CreateChatHandler : IRequestHandler<CreateChatRequest, ChatDto>
             .FirstOrDefaultAsync(c => c.BarterId == request.BarterId, cancellationToken);
         if (chat is null)
         {
-            chat = new Chat { BarterId = request.BarterId };
+            chat = new Domain.Models.Chat { BarterId = request.BarterId };
             _db.Chats.Add(chat);
             await _db.SaveChangesAsync(cancellationToken);
         }

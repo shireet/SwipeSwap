@@ -3,6 +3,8 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SwipeSwap.Application.Chat.Dtos;
+using GetChatMessagesRequest = SwipeSwap.Application.Chat.GetChatMessagesRequest;
+using GetUserChatsRequest = SwipeSwap.Application.Chat.GetUserChatsRequest;
 
 namespace EntryPoint.Controllers.v1;
 

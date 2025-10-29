@@ -1,8 +1,10 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SwipeSwap.Application.Chat.Dtos;
-using SwipeSwap.Infrastructure.Postgres.Context;
 using SwipeSwap.Domain.Models;
+using SwipeSwap.Infrastructure.Postgres.Context;
+
+namespace SwipeSwap.Application.Chat;
 
 public class SendMessageHandler : IRequestHandler<SendMessageRequest, MessageDto>
 {

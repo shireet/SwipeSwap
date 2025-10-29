@@ -10,6 +10,10 @@ namespace SwipeSwap.Infrastructure.Postgres.Repositories.Implementations;
 
 public class ItemRepository(AppDbContext dbContext) : IItemRepository
 {
+    public IQueryable<Item> Items => dbContext.Set<Item>()
+        .Include(i => i.ItemTags)
+        .ThenInclude(it => it.Tag);
+    
     public async Task<PagedResult<Item>> GetCatalogAsync(
     int page, int pageSize,
     string? sortBy, string? sortDir,

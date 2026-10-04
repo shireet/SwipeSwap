@@ -1,5 +1,14 @@
-﻿version: "3.8"
 services:
+  api:
+    build: .
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      ConnectionStrings__DefaultConnection: "Host=postgres;Port=5432;Database=postgres;Username=username;Password=password"
+      ConnectionStrings__Redis: "redis:6379"
+    ports:
+      - "8080:8080"
   postgres:
     image: postgres:15
     environment:

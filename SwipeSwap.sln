@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwipeSwap.WebApi", "src\SwipeSwap.WebApi\SwipeSwap.WebApi.csproj", "{0A689F24-5D49-4245-A53E-2E6F00A734FB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwipeSwap.WebApi", "src\SwipeSwap.WebAPI\SwipeSwap.WebAPI.csproj", "{0A689F24-5D49-4245-A53E-2E6F00A734FB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2D43294D-98FF-4048-B54D-58D61D35752A}"
 	ProjectSection(SolutionItems) = preProject

@@ -1,33 +1,28 @@
-﻿FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
 WORKDIR /app
 EXPOSE 8080
-EXPOSE 8081
 
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
-COPY ["src/SwipeSwap.WebApi/SwipeSwap.WebApi.csproj", "SwipeSwap.WebApi/"]
-COPY ["src/SwipeSwap.Infrastructure.Jwt/SwipeSwap.Infrastructure.Jwt.csproj", "SwipeSwap.Infrastructure.Jwt/"]
-COPY ["src/SwipeSwap.Infrastructure.Postgres/SwipeSwap.Infrastructure.Postgres.csproj", "SwipeSwap.Infrastructure.Postgres/"]
-COPY ["src/SwipeSwap.Infrastructure.Redis/SwipeSwap.Infrastructure.Redis.csproj", "SwipeSwap.Infrastructure.Redis/"]
-COPY ["src/SwipeSwap.Domain/SwipeSwap.Domain.csproj", "SwipeSwap.Domain/"]
-COPY ["src/SwipeSwap.EntryPoint/SwipeSwap.EntryPoint.csproj", "SwipeSwap.EntryPoint/"]
-COPY ["src/SwipeSwap.Application/SwipeSwap.Application.csproj", "SwipeSwap.Application/"]
+COPY Directory.Packages.props .
+COPY ["src/SwipeSwap.WebAPI/SwipeSwap.WebAPI.csproj", "src/SwipeSwap.WebAPI/"]
+COPY ["src/SwipeSwap.Infrastructure.Jwt/SwipeSwap.Infrastructure.Jwt.csproj", "src/SwipeSwap.Infrastructure.Jwt/"]
+COPY ["src/SwipeSwap.Infrastructure.Postgres/SwipeSwap.Infrastructure.Postgres.csproj", "src/SwipeSwap.Infrastructure.Postgres/"]
+COPY ["src/SwipeSwap.Infrastructure.Redis/SwipeSwap.Infrastructure.Redis.csproj", "src/SwipeSwap.Infrastructure.Redis/"]
+COPY ["src/SwipeSwap.Domain/SwipeSwap.Domain.csproj", "src/SwipeSwap.Domain/"]
+COPY ["src/SwipeSwap.EntryPoint/SwipeSwap.EntryPoint.csproj", "src/SwipeSwap.EntryPoint/"]
+COPY ["src/SwipeSwap.Application/SwipeSwap.Application.csproj", "src/SwipeSwap.Application/"]
 
+RUN dotnet restore "src/SwipeSwap.WebAPI/SwipeSwap.WebAPI.csproj"
 
-RUN dotnet restore "SwipeSwap.WebApi/SwipeSwap.WebApi.csproj"
+COPY src/ src/
 
-COPY src/ .
-
-WORKDIR "/src/SwipeSwap.WebApi"
-RUN dotnet build "SwipeSwap.WebApi.csproj" -c $BUILD_CONFIGURATION -o /app/build
-
-FROM build AS publish
-ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "SwipeSwap.WebApi.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+WORKDIR /src/src/SwipeSwap.WebAPI
+RUN dotnet publish "SwipeSwap.WebAPI.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
-COPY --from=publish /app/publish .
+COPY --from=build /app/publish .
 ENTRYPOINT ["dotnet", "SwipeSwap.WebApi.dll"]

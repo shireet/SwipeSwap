@@ -23,7 +23,7 @@
     <ItemGroup>
         <ProjectReference Include="..\..\src\SwipeSwap.Infrastructure.Jwt\SwipeSwap.Infrastructure.Jwt.csproj" />
         <ProjectReference Include="..\..\src\SwipeSwap.Infrastructure.Postgres\SwipeSwap.Infrastructure.Postgres.csproj" />
-        <ProjectReference Include="..\..\src\SwipeSwap.WebApi\SwipeSwap.WebApi.csproj" />
+        <ProjectReference Include="..\..\src\SwipeSwap.WebAPI\SwipeSwap.WebAPI.csproj" />
         <ProjectReference Include="..\..\src\SwipeSwap.EntryPoint\SwipeSwap.EntryPoint.csproj" />
         <ProjectReference Include="..\SwipeSwap.TestInfra\SwipeSwap.TestInfra.csproj" />
     </ItemGroup>

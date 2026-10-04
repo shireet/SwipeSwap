@@ -20,7 +20,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\src\SwipeSwap.Infrastructure.Postgres\SwipeSwap.Infrastructure.Postgres.csproj" />
-        <ProjectReference Include="..\..\src\SwipeSwap.WebApi\SwipeSwap.WebApi.csproj" />
+        <ProjectReference Include="..\..\src\SwipeSwap.WebAPI\SwipeSwap.WebAPI.csproj" />
     </ItemGroup>
 
 </Project>

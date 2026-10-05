@@ -1,0 +1,7 @@
+# Журнал API после POST /api/v1/authenticate/register (baseline 96e1706)
+# Воспроизведение: docker compose up -d postgres redis; docker compose up -d --build api;
+#   curl -X POST localhost:8080/api/v1/authenticate/register -H 'content-type: application/json' \
+#     -d '{"email":"leak@example.com","password":"Passw0rd!123","displayName":"leak"}'; docker compose logs api
+# Токен в строке Response обрезана для читаемости.
+Request: Method: POST, Path: /api/v1/authenticate/register, Query: , Body: {"email":"leak@example.com","password":"Passw0rd!123","displayName":"leak"}
+Response: 200 {"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJsZWFrQGV4YW1wbGUuY29tIiwiZGlzcGxheU5hbWUiOiJsZWFrIiwiZXhwIjoxNzkxMTU4NDEyLCJpc3MiOiJTd2lwZVN3YXAiLCJhdWQiOiJTd2lwZVN3YXBVc2VycyJ9.mwLojO
